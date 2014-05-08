@@ -1,9 +1,9 @@
 package train;
 
-import lejos.hardware.*;
-import lejos.hardware.lcd.*;
-import lejos.hardware.port.*;
-import lejos.hardware.sensor.*;
+import lejos.hardware.Button;
+import lejos.hardware.lcd.LCD;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3ColorSensor;
 
 public class ColorDetection {
 	
