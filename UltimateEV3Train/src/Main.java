@@ -16,6 +16,8 @@ public class Main {
 			colorDetection.setColor();
 			if (colorDetection.getColor() == 1) {
 				trainMovement.stop();
+				trainMovement.unload();
+				trainMovement.load();
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {

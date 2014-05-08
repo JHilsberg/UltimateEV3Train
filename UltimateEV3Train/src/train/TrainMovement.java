@@ -24,7 +24,7 @@ public class TrainMovement {
 	}
 
 	public void unload() {
-		int loadAngle = 40;
+		int loadAngle = 55;
 		this.loadingMotor.setSpeed(this.loadingSpeed);
 
 		while (this.loadingMotor.getTachoCount() < loadAngle) {
