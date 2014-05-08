@@ -1,9 +1,8 @@
 package train;
 
-import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.*;
 
 public class ColorDetection {
 	
@@ -12,10 +11,16 @@ public class ColorDetection {
 	
 	public int getColor() {
 		LCD.drawString("erkannte Farbe: " + detectedColor, 0, 0);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return detectedColor;
 	}
-	public void setColor(int color) {
-		this.detectedColor = color;
+	public void setColor() {
+		this.detectedColor = colorSensor.getColorID();
 	}
 
 }
