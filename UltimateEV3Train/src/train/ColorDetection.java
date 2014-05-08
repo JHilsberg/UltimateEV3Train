@@ -1,7 +1,7 @@
 package train;
 
-import lejos.hardware.Button;
-import lejos.hardware.lcd.LCD;
+import lejos.hardware.*;
+import lejos.hardware.lcd.*;
 import lejos.hardware.port.*;
 import lejos.hardware.sensor.*;
 
