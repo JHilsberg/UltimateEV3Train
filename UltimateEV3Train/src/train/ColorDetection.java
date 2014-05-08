@@ -13,6 +13,7 @@ public class ColorDetection {
 	public ColorDetection(){
 		while(Button.ESCAPE.isDown() == false){
 			detectedColor = colorSensor.getColorID();
+			//permanently color detection
 			LCD.drawString("erkannte Farbe: " + detectedColor, 0, 0);
 		}
 	}
