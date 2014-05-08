@@ -5,7 +5,6 @@ import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 
-//Color Detection
 public class ColorDetection {
 	
 	private EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
