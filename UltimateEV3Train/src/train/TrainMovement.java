@@ -17,6 +17,11 @@ public class TrainMovement {
 		this.movingMotor.backward();
 	}
 	
+	public void stop(){
+		this.movingMotor.stop();
+		this.movingMotor.flt();
+	}
+	
 	public void unload(){
 		this.loadingMotor.setSpeed(this.loadingSpeed);
 		this.loadingMotor.forward();
