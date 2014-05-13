@@ -10,14 +10,13 @@ public class ColorDetection {
 	private int detectedColor;
 	
 	public int getColor() {
-		LCD.drawString("erkannte Farbe: " + detectedColor, 0, 0);
+		LCD.drawString("erkannte Farbe: " + this.detectedColor, 0, 0);
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return detectedColor;
+		return this.detectedColor;
 	}
 	public void setColor() {
 		this.detectedColor = colorSensor.getColorID();
