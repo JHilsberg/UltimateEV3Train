@@ -2,17 +2,17 @@ import lejos.hardware.Button;
 import terminal.TerminalControl;
 import train.*;
 
-public class Main {
+public class MainTrain {
 
 	private TrainMovement trainMovement = new TrainMovement();
 	ColorDetection colorDetection = new ColorDetection();
-	
+	TerminalControl terminalControl = new TerminalControl();
 
 	public static void main(String[] args) {
-		new Main();
+		new MainTrain();
 	}
 
-	Main() {
+	MainTrain() {
 		while (Button.ESCAPE.isDown() == false) {
 			trainMovement.forward();
 			colorDetection.setColor();
