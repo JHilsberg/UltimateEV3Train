@@ -14,55 +14,56 @@ public class TerminalControl {
 			MotorPort.C);
 
 	private int movingSpeedElevator = 50;
-	private int movingSpeedRotation = 20;
+	private int movingSpeedRotation = 50;
 
-	public void liftElevator() {
+	private void liftElevator() {
 		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
 		this.elevatorRight.setSpeed(this.movingSpeedElevator);
 		this.elevatorLeft.forward();
-		this.elevatorLeft.forward();
+		this.elevatorRight.forward();
 	}
 
-	public void lowerElevator() {
+	private void lowerElevator() {
 		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
 		this.elevatorRight.setSpeed(this.movingSpeedElevator);
 		this.elevatorLeft.backward();
 		this.elevatorRight.backward();
 	}
 
-	public void stopElevator() {
+	private void stopElevator() {
 		this.elevatorLeft.stop();
 		this.elevatorRight.stop();
 		this.elevatorLeft.flt();
 		this.elevatorRight.flt();
 	}
 
-	public void rotateLeft() {
+	private void rotateLeft() {
 		this.rotationMotor.setSpeed(this.movingSpeedRotation);
 		this.rotationMotor.forward();
 	}
 
-	public void rotateRight() {
+	private void rotateRight() {
 		this.rotationMotor.setSpeed(this.movingSpeedRotation);
 		this.rotationMotor.backward();
 	}
 
-	public void stopRotation() {
+	private void stopRotation() {
 		this.rotationMotor.stop();
 	}
 
 	public void loadTerminal(boolean loadLeft, boolean loadRight) {
 		int loadAngle = 40;
-		
-		while(this.elevatorLeft.getTachoCount() > 0 && this.elevatorRight.getTachoCount() > 0){
+
+		while (this.elevatorLeft.getTachoCount() > 0
+				&& this.elevatorRight.getTachoCount() > 0) {
 			this.lowerElevator();
 		}
 		this.stopElevator();
-		
-		while(loadLeft && this.rotationMotor.getTachoCount() < loadAngle){
+
+		while (loadLeft && this.rotationMotor.getTachoCount() < loadAngle) {
 			this.rotateLeft();
 		}
-		while(loadRight && this.rotationMotor.getTachoCount() < loadAngle){
+		while (loadRight && this.rotationMotor.getTachoCount() < loadAngle) {
 			this.rotateRight();
 		}
 		this.stopRotation();
@@ -78,10 +79,15 @@ public class TerminalControl {
 		}
 		this.stopElevator();
 
-		while (unloadLeft && this.rotationMotor.getTachoCount() < unloadAngle) {
+		while (unloadLeft && this.rotationMotor.getTachoCount() < unloadAngle
+				&& this.elevatorLeft.getTachoCount() == unloadHeight
+				&& this.elevatorRight.getTachoCount() == unloadHeight) {
 			this.rotateLeft();
 		}
-		while (unloadRight && this.rotationMotor.getTachoCount() < unloadAngle) {
+		this.stopRotation();
+		while (unloadRight && this.rotationMotor.getTachoCount() < unloadAngle
+				&& this.elevatorLeft.getTachoCount() == unloadHeight
+				&& this.elevatorRight.getTachoCount() == unloadHeight) {
 			this.rotateRight();
 		}
 		this.stopRotation();
