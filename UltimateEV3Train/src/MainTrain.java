@@ -1,5 +1,4 @@
 import lejos.hardware.Button;
-import terminal.TerminalControl;
 import train.*;
 
 public class MainTrain {
