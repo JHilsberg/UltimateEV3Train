@@ -49,11 +49,10 @@ public class TerminalControl {
 
 	public void stopRotation() {
 		this.rotationMotor.stop();
-		this.rotationMotor.flt();
 	}
 
 	public void loadTerminal(boolean loadLeft, boolean loadRight) {
-		int loadAngle = 60;
+		int loadAngle = 40;
 		
 		while(this.elevatorLeft.getTachoCount() > 0 && this.elevatorRight.getTachoCount() > 0){
 			this.lowerElevator();
@@ -70,8 +69,8 @@ public class TerminalControl {
 	}
 
 	public void unloadTerminal(boolean unloadLeft, boolean unloadRight) {
-		int unloadHeight = 60;
-		int unloadAngle = 60;
+		int unloadHeight = 180;
+		int unloadAngle = 50;
 
 		while (this.elevatorLeft.getTachoCount() < unloadHeight
 				&& this.elevatorRight.getTachoCount() < unloadHeight) {

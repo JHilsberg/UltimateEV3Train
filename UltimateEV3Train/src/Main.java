@@ -1,10 +1,12 @@
 import lejos.hardware.Button;
+import terminal.TerminalControl;
 import train.*;
 
 public class Main {
 
 	private TrainMovement trainMovement = new TrainMovement();
 	ColorDetection colorDetection = new ColorDetection();
+	TerminalControl terminalControl = new TerminalControl();
 
 	public static void main(String[] args) {
 		new Main();
