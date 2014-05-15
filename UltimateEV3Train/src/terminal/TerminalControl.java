@@ -51,12 +51,40 @@ public class TerminalControl {
 		this.rotationMotor.stop();
 		this.rotationMotor.flt();
 	}
-	
-	public void loadTerminal(){
+
+	public void loadTerminal(boolean loadLeft, boolean loadRight) {
+		int loadAngle = 60;
 		
+		while(this.elevatorLeft.getTachoCount() > 0 && this.elevatorRight.getTachoCount() > 0){
+			this.lowerElevator();
+		}
+		this.stopElevator();
+		
+		while(loadLeft && this.rotationMotor.getTachoCount() < loadAngle){
+			this.rotateLeft();
+		}
+		while(loadRight && this.rotationMotor.getTachoCount() < loadAngle){
+			this.rotateRight();
+		}
+		this.stopRotation();
 	}
-	
-	public void unloadTerminal(){
-		
+
+	public void unloadTerminal(boolean unloadLeft, boolean unloadRight) {
+		int unloadHeight = 60;
+		int unloadAngle = 60;
+
+		while (this.elevatorLeft.getTachoCount() < unloadHeight
+				&& this.elevatorRight.getTachoCount() < unloadHeight) {
+			this.liftElevator();
+		}
+		this.stopElevator();
+
+		while (unloadLeft && this.rotationMotor.getTachoCount() < unloadAngle) {
+			this.rotateLeft();
+		}
+		while (unloadRight && this.rotationMotor.getTachoCount() < unloadAngle) {
+			this.rotateRight();
+		}
+		this.stopRotation();
 	}
 }
