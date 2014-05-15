@@ -15,7 +15,7 @@ public class TerminalControl {
 
 	private int movingSpeedElevator = 50;
 	private int movingSpeedRotation = 50;
-	
+
 	public int tachoElevatorLeft = elevatorLeft.getTachoCount();
 	public int tachoElevatorRight = elevatorRight.getTachoCount();
 	public int tachoRotationMotor = rotationMotor.getTachoCount();
@@ -66,12 +66,30 @@ public class TerminalControl {
 
 		while (loadLeft && this.rotationMotor.getTachoCount() < loadAngle) {
 			this.rotateLeft();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			}
+			while (this.rotationMotor.getTachoCount() > 0) {
+				this.rotateRight();
+			}
 		}
 		while (loadRight && this.rotationMotor.getTachoCount() < loadAngle) {
 			this.rotateRight();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			}
+			while (this.rotationMotor.getTachoCount() > 0) {
+				this.rotateLeft();
+			}
 		}
 		this.stopRotation();
-		
+
 	}
 
 	public void unloadTerminal(boolean unloadLeft, boolean unloadRight) {
