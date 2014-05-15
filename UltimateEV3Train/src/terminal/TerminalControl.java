@@ -15,6 +15,10 @@ public class TerminalControl {
 
 	private int movingSpeedElevator = 50;
 	private int movingSpeedRotation = 50;
+	
+	public int tachoElevatorLeft = elevatorLeft.getTachoCount();
+	public int tachoElevatorRight = elevatorRight.getTachoCount();
+	public int tachoRotationMotor = rotationMotor.getTachoCount();
 
 	private void liftElevator() {
 		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
@@ -67,6 +71,7 @@ public class TerminalControl {
 			this.rotateRight();
 		}
 		this.stopRotation();
+		
 	}
 
 	public void unloadTerminal(boolean unloadLeft, boolean unloadRight) {
