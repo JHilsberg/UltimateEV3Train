@@ -6,6 +6,7 @@ import train.*;
 public class MainTrain {
 
 	private TrainController train = new TrainController();
+	private boolean greenDetected = false;
 
 	public static void main(String[] args) {
 		try {
@@ -23,19 +24,20 @@ public class MainTrain {
 			train.forward();
 			train.detectColor();
 
-			if (train.getColor() == Color.GREEN) {
-				LCD.drawString("Farbe: grün", 0, 0);
+			if (train.getColor() == Color.GREEN && greenDetected == false) {
+				LCD.drawString("Farbe: gruen", 0, 0);
 				train.stop();
 				train.unload();
 				train.load();
-				Thread.sleep(5000);
+				greenDetected = true;
 			}
 			if (train.getColor() == Color.YELLOW) {
 				LCD.drawString("Farbe: gelb", 0, 0);
 				train.stop();
-				Thread.sleep(1000);
+				greenDetected = false;
 			} else{
 				LCD.drawString("Farberkennung...", 0, 0);
+				Thread.sleep(200);
 			}
 		}
 	}
