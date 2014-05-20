@@ -1,28 +1,41 @@
 import lejos.hardware.Button;
+import lejos.hardware.lcd.LCD;
 import lejos.robotics.Color;
 import train.*;
 
 public class MainTrain {
 
-	private TrainMovement trainMovement = new TrainMovement();
-	ColorDetection colorDetection = new ColorDetection();
-	
+	private TrainController train = new TrainController();
 
 	public static void main(String[] args) {
-		new MainTrain();
+		try {
+			new MainTrain();
+		} catch (InterruptedException e) {
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
 	}
 
-	MainTrain() {
+	MainTrain() throws InterruptedException {
 		while (Button.ESCAPE.isDown() == false) {
+			LCD.clearDisplay();
 			
-			if (colorDetection.getColor() == Color.GREEN) {
-				colorDetection.onGreenColor();
+			train.forward();
+			train.detectColor();
+
+			if (train.getColor() == Color.GREEN) {
+				LCD.drawString("Farbe: grün", 0, 0);
+				train.stop();
+				train.unload();
+				train.load();
+				Thread.sleep(5000);
 			}
-			if(colorDetection.getColor() == Color.YELLOW){
-				colorDetection.onYellowColor();
+			if (train.getColor() == Color.YELLOW) {
+				LCD.drawString("Farbe: gelb", 0, 0);
+				train.stop();
+				Thread.sleep(1000);
 			} else{
-				trainMovement.forward();
-				colorDetection.setColor();
+				LCD.drawString("Farberkennung...", 0, 0);
 			}
 		}
 	}
