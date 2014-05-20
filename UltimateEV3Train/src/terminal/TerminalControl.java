@@ -20,21 +20,32 @@ public class TerminalControl {
 	private boolean rotationPositionLeft = false;
 	private boolean rotationPositionRight = false;
 
-	private void liftElevator() {
-		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
-		this.elevatorRight.setSpeed(this.movingSpeedElevator);
-		this.elevatorLeft.forward();
-		this.elevatorRight.forward();
+	public void liftElevator() {
+		int positionElevator = 180;
+
+		while (elevatorLeft.getTachoCount() < positionElevator
+				&& elevatorRight.getTachoCount() < positionElevator) {
+			this.elevatorLeft.setSpeed(this.movingSpeedElevator);
+			this.elevatorRight.setSpeed(this.movingSpeedElevator);
+			this.elevatorLeft.forward();
+			this.elevatorRight.forward();
+		}
+		this.stopElevator();
 	}
 
-	private void lowerElevator() {
-		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
-		this.elevatorRight.setSpeed(this.movingSpeedElevator);
-		this.elevatorLeft.backward();
-		this.elevatorRight.backward();
+	public void lowerElevator() {
+
+		while (elevatorLeft.getTachoCount() > 0
+				&& elevatorRight.getTachoCount() > 0) {
+			this.elevatorLeft.setSpeed(this.movingSpeedElevator);
+			this.elevatorRight.setSpeed(this.movingSpeedElevator);
+			this.elevatorLeft.backward();
+			this.elevatorRight.backward();
+		}
+		this.stopElevator();
 	}
 
-	private void stopElevator() {
+	public void stopElevator() {
 		this.elevatorLeft.stop();
 		this.elevatorRight.stop();
 		this.elevatorLeft.flt();
@@ -92,6 +103,27 @@ public class TerminalControl {
 			this.stopRotation();
 			this.rotationPositionRight = false;
 		}
+	}
+
+	public void unloadTerminalLeft() {
+		int loadAngleLeft = 90;
+
+		while (this.rotationMotor.getTachoCount() < loadAngleLeft) {
+			this.rotateLeft();
+		}
+		this.stopRotation();
+		this.rotationPositionLeft = true;
+	}
+
+	public void unloadTerminalRight() {
+		int loadAngleRight = -90;
+
+		while (this.rotationMotor.getTachoCount() > loadAngleRight) {
+			this.rotateRight();
+		}
+		this.stopRotation();
+		this.rotationPositionRight = true;
+
 	}
 
 	public RegulatedMotor getRotationMotor() {

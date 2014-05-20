@@ -11,8 +11,6 @@ public class MainTerminal {
 	MainTerminal() {
 		TerminalControl terminal = new TerminalControl();
 
-		
-
 		while (Button.ESCAPE.isDown() == false) {
 			LCD.drawString("Links: ", 0, 0);
 			LCD.drawInt(terminal.getElevatorLeft().getTachoCount(), 10, 0);
@@ -20,7 +18,14 @@ public class MainTerminal {
 			LCD.drawInt(terminal.getElevatorRight().getTachoCount(), 10, 1);
 			LCD.drawString("Rotation: "
 					+ terminal.getRotationMotor().getTachoCount(), 0, 2);
-			terminal.loadTerminalRight();
+			terminal.liftElevator();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			terminal.unloadTerminalRight();
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -34,7 +39,7 @@ public class MainTerminal {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 }
