@@ -1,5 +1,6 @@
 package terminal;
 
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.*;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.RegulatedMotor;
@@ -15,10 +16,9 @@ public class TerminalControl {
 
 	private int movingSpeedElevator = 50;
 	private int movingSpeedRotation = 50;
-
-	public int tachoElevatorLeft = elevatorLeft.getTachoCount();
-	public int tachoElevatorRight = elevatorRight.getTachoCount();
-	public int tachoRotationMotor = rotationMotor.getTachoCount();
+	
+	private boolean rotationPositionLeft = false;
+	private boolean rotationPosistionRight = false;
 
 	private void liftElevator() {
 		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
@@ -55,64 +55,66 @@ public class TerminalControl {
 		this.rotationMotor.stop();
 	}
 
-	public void loadTerminal(boolean loadLeft, boolean loadRight) {
-		int loadAngle = 40;
-
-		while (this.elevatorLeft.getTachoCount() > 0
-				&& this.elevatorRight.getTachoCount() > 0) {
-			this.lowerElevator();
-		}
-		this.stopElevator();
-
-		while (loadLeft && this.rotationMotor.getTachoCount() < loadAngle) {
+	public void loadTerminalLeft() {
+		int loadAngleLeft = 40;
+		
+		while (this.rotationMotor.getTachoCount() < loadAngleLeft) {
 			this.rotateLeft();
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
-			}
-			while (this.rotationMotor.getTachoCount() > 0) {
-				this.rotateRight();
-			}
 		}
-		while (loadRight && this.rotationMotor.getTachoCount() < loadAngle) {
+		this.stopRotation();
+		this.rotationPositionLeft = true;
+	}
+	
+	public void loadTerminalRight() {
+		int loadAngleRight = -40;
+		
+		while (this.rotationMotor.getTachoCount() < loadAngleRight) {
 			this.rotateRight();
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+		}
+		this.stopRotation();
+		this.rotationPosistionRight = true;
+		
+	}
+	public void resetTerminal() {
+		
+		if (rotationPositionLeft){
+			while(this.rotationMotor.getTachoCount() > 0){
+				this.rotateRight();
+				
 			}
-			while (this.rotationMotor.getTachoCount() > 0) {
+			this.stopRotation();
+			this.rotationPositionLeft = false;			
+		}else{
+			while(this.rotationMotor.getTachoCount() > 0){
 				this.rotateLeft();
 			}
+			this.stopRotation();
+			this.rotationPositionLeft = false;
 		}
-		this.stopRotation();
-
 	}
 
-	public void unloadTerminal(boolean unloadLeft, boolean unloadRight) {
-		int unloadHeight = 180;
-		int unloadAngle = 50;
-
-		while (this.elevatorLeft.getTachoCount() < unloadHeight
-				&& this.elevatorRight.getTachoCount() < unloadHeight) {
-			this.liftElevator();
-		}
-		this.stopElevator();
-
-		while (unloadLeft && this.rotationMotor.getTachoCount() < unloadAngle
-				&& this.elevatorLeft.getTachoCount() == unloadHeight
-				&& this.elevatorRight.getTachoCount() == unloadHeight) {
-			this.rotateLeft();
-		}
-		this.stopRotation();
-		while (unloadRight && this.rotationMotor.getTachoCount() < unloadAngle
-				&& this.elevatorLeft.getTachoCount() == unloadHeight
-				&& this.elevatorRight.getTachoCount() == unloadHeight) {
-			this.rotateRight();
-		}
-		this.stopRotation();
+	public RegulatedMotor getRotationMotor() {
+		return rotationMotor;
 	}
+
+	public void setRotationMotor(RegulatedMotor rotationMotor) {
+		this.rotationMotor = rotationMotor;
+	}
+
+	public RegulatedMotor getElevatorRight() {
+		return elevatorRight;
+	}
+
+	public void setElevatorRight(RegulatedMotor elevatorRight) {
+		this.elevatorRight = elevatorRight;
+	}
+
+	public RegulatedMotor getElevatorLeft() {
+		return elevatorLeft;
+	}
+
+	public void setElevatorLeft(RegulatedMotor elevatorLeft) {
+		this.elevatorLeft = elevatorLeft;
+	}
+
 }
