@@ -16,9 +16,9 @@ public class TerminalControl {
 
 	private int movingSpeedElevator = 50;
 	private int movingSpeedRotation = 50;
-	
+
 	private boolean rotationPositionLeft = false;
-	private boolean rotationPosistionRight = false;
+	private boolean rotationPositionRight = false;
 
 	private void liftElevator() {
 		this.elevatorLeft.setSpeed(this.movingSpeedElevator);
@@ -56,40 +56,41 @@ public class TerminalControl {
 	}
 
 	public void loadTerminalLeft() {
-		int loadAngleLeft = 40;
-		
+		int loadAngleLeft = 60;
+
 		while (this.rotationMotor.getTachoCount() < loadAngleLeft) {
 			this.rotateLeft();
 		}
 		this.stopRotation();
 		this.rotationPositionLeft = true;
 	}
-	
+
 	public void loadTerminalRight() {
-		int loadAngleRight = -40;
-		
-		while (this.rotationMotor.getTachoCount() < loadAngleRight) {
+		int loadAngleRight = -60;
+
+		while (this.rotationMotor.getTachoCount() > loadAngleRight) {
 			this.rotateRight();
 		}
 		this.stopRotation();
-		this.rotationPosistionRight = true;
-		
+		this.rotationPositionRight = true;
+
 	}
+
 	public void resetTerminal() {
-		
-		if (rotationPositionLeft){
-			while(this.rotationMotor.getTachoCount() > 0){
+
+		if (rotationPositionLeft) {
+			while (this.rotationMotor.getTachoCount() > 0) {
 				this.rotateRight();
-				
-			}
-			this.stopRotation();
-			this.rotationPositionLeft = false;			
-		}else{
-			while(this.rotationMotor.getTachoCount() > 0){
-				this.rotateLeft();
+
 			}
 			this.stopRotation();
 			this.rotationPositionLeft = false;
+		} else if (rotationPositionRight) {
+			while (this.rotationMotor.getTachoCount() < 0) {
+				this.rotateLeft();
+			}
+			this.stopRotation();
+			this.rotationPositionRight = false;
 		}
 	}
 
