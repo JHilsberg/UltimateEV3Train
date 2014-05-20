@@ -10,10 +10,7 @@ public class ColorDetection extends TrainMovement{
 	private EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
 	private int detectedColor;
 
-	public ColorDetection() {
-		// currently unknown
-	}
-
+	
 	public int getColor() {
 		if (this.detectedColor == Color.GREEN) {
 			LCD.drawString("erkannte Farbe: grün", 0, 0);

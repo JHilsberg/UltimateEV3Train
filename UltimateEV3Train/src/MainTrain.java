@@ -14,7 +14,7 @@ public class MainTrain {
 
 	MainTrain() {
 		while (Button.ESCAPE.isDown() == false) {
-			colorDetection.setColor();
+			
 			if (colorDetection.getColor() == Color.GREEN) {
 				colorDetection.onGreenColor();
 			}
@@ -22,6 +22,7 @@ public class MainTrain {
 				colorDetection.onYellowColor();
 			} else{
 				trainMovement.forward();
+				colorDetection.setColor();
 			}
 		}
 	}
