@@ -1,4 +1,5 @@
 import lejos.hardware.Button;
+import lejos.robotics.Color;
 import train.*;
 
 public class MainTrain {
@@ -13,18 +14,14 @@ public class MainTrain {
 
 	MainTrain() {
 		while (Button.ESCAPE.isDown() == false) {
-			trainMovement.forward();
 			colorDetection.setColor();
-			if (colorDetection.getColor() == 1) {
-				trainMovement.stop();
-				trainMovement.unload();
-				trainMovement.load();
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			if (colorDetection.getColor() == Color.GREEN) {
+				colorDetection.onGreenColor();
+			}
+			if(colorDetection.getColor() == Color.YELLOW){
+				colorDetection.onYellowColor();
+			} else{
+				trainMovement.forward();
 			}
 		}
 	}
