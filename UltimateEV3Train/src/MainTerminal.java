@@ -18,28 +18,99 @@ public class MainTerminal {
 			LCD.drawInt(terminal.getElevatorRight().getTachoCount(), 10, 1);
 			LCD.drawString("Rotation: "
 					+ terminal.getRotationMotor().getTachoCount(), 0, 2);
-			terminal.liftElevator();
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			// Entladen Terminal Links
+			if (Button.UP.isDown() && Button.LEFT.isDown()) {
+				terminal.liftElevator();
+				LCD.refresh();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.unloadTerminalLeft();
+				LCD.refresh();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.resetTerminal();
+				LCD.refresh();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.lowerElevator();
+				LCD.refresh();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+			// Beladen Terminal Links
+			else if (Button.DOWN.isDown() && Button.LEFT.isDown()) {
+				terminal.loadTerminalLeft();
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.resetTerminal();
+			} 
+			// Beladen Terminal Rechts
+			else if (Button.DOWN.isDown() && Button.RIGHT.isDown()) {
+				terminal.loadTerminalRight();
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.resetTerminal();
+			} 
+			// Entladen Terminal Rechts
+			else if(Button.UP.isDown() && Button.RIGHT.isDown()){
+				terminal.liftElevator();
+				LCD.refresh();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.unloadTerminalRight();
+				LCD.refresh();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.resetTerminal();
+				LCD.refresh();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				terminal.lowerElevator();
+				LCD.refresh();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
-			terminal.unloadTerminalRight();
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			terminal.resetTerminal();
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 		}
 	}
 }
