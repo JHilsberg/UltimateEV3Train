@@ -5,25 +5,32 @@ import lejos.hardware.port.MotorPort;
 import lejos.robotics.RegulatedMotor;
 
 public class TerminalControl {
-
+	// Aufruf Motoren
 	private RegulatedMotor elevatorLeft = new EV3LargeRegulatedMotor(
 			MotorPort.A);
 	private RegulatedMotor elevatorRight = new EV3LargeRegulatedMotor(
 			MotorPort.B);
 	private RegulatedMotor rotationMotor = new EV3MediumRegulatedMotor(
 			MotorPort.C);
-
+	// Geschwindigkeitsvorgaben für einzelne Bewegungen
 	private int movingSpeedElevator = 50;
-	private int movingSpeedRotation = 200;
-
+	private int movingSpeedReset = 50;
+	private int movingSpeedRotationUnload = 200;
+	private int movingSpeedRotationLoad = 100;
+	// Positionsvorgabe für einzelne Bewegungen
+	private int positionElevator = 180;
+	private int loadAngleLeft = 51;
+	private int loadAngleRight = -51;
+	private int unloadAngleLeft = 77;
+	private int unloadAngleRight = -77;
+	// Positionsmeldung
 	private boolean rotationPositionLeft = false;
 	private boolean rotationPositionRight = false;
 
 	public void liftElevator() {
-		int positionElevator = 180;
 
-		while (elevatorLeft.getTachoCount() < positionElevator+10
-				&& elevatorRight.getTachoCount() < positionElevator) {
+		while (elevatorLeft.getTachoCount() < this.positionElevator + 10
+				&& elevatorRight.getTachoCount() < this.positionElevator) {
 			this.elevatorLeft.setSpeed(this.movingSpeedElevator);
 			this.elevatorRight.setSpeed(this.movingSpeedElevator);
 			this.elevatorLeft.forward();
@@ -51,13 +58,34 @@ public class TerminalControl {
 		this.elevatorRight.flt();
 	}
 
-	private void rotateLeft() {
-		this.rotationMotor.setSpeed(this.movingSpeedRotation);
+	private void rotateLeftReset() {
+		this.rotationMotor.setSpeed(movingSpeedReset);
+		this.rotationMotor.forward();
+		;
+	}
+
+	private void rotateRightReset() {
+		this.rotationMotor.setSpeed(movingSpeedReset);
+		this.rotationMotor.backward();
+	}
+
+	private void rotateLeftUnload() {
+		this.rotationMotor.setSpeed(this.movingSpeedRotationUnload);
 		this.rotationMotor.forward();
 	}
 
-	private void rotateRight() {
-		this.rotationMotor.setSpeed(this.movingSpeedRotation);
+	private void rotateLeftLoad() {
+		this.rotationMotor.setSpeed(this.movingSpeedRotationLoad);
+		this.rotationMotor.forward();
+	}
+
+	private void rotateRightUnload() {
+		this.rotationMotor.setSpeed(this.movingSpeedRotationUnload);
+		this.rotationMotor.backward();
+	}
+
+	private void rotateRightLoad() {
+		this.rotationMotor.setSpeed(this.movingSpeedRotationLoad);
 		this.rotationMotor.backward();
 	}
 
@@ -66,20 +94,18 @@ public class TerminalControl {
 	}
 
 	public void loadTerminalLeft() {
-		int loadAngleLeft = 51;
 
-		while (this.rotationMotor.getTachoCount() < loadAngleLeft) {
-			this.rotateLeft();
+		while (this.rotationMotor.getTachoCount() < this.loadAngleLeft) {
+			this.rotateLeftLoad();
 		}
 		this.stopRotation();
 		this.rotationPositionLeft = true;
 	}
 
 	public void loadTerminalRight() {
-		int loadAngleRight = -51;
 
-		while (this.rotationMotor.getTachoCount() > loadAngleRight) {
-			this.rotateRight();
+		while (this.rotationMotor.getTachoCount() > this.loadAngleRight) {
+			this.rotateRightLoad();
 		}
 		this.stopRotation();
 		this.rotationPositionRight = true;
@@ -87,20 +113,18 @@ public class TerminalControl {
 	}
 
 	public void unloadTerminalLeft() {
-		int unloadAngleLeft = 77;
 
-		while (this.rotationMotor.getTachoCount() < unloadAngleLeft) {
-			this.rotateLeft();
+		while (this.rotationMotor.getTachoCount() < this.unloadAngleLeft) {
+			this.rotateLeftUnload();
 		}
 		this.stopRotation();
 		this.rotationPositionLeft = true;
 	}
 
 	public void unloadTerminalRight() {
-		int unloadAngleRight = -77;
 
-		while (this.rotationMotor.getTachoCount() > unloadAngleRight) {
-			this.rotateRight();
+		while (this.rotationMotor.getTachoCount() > this.unloadAngleRight) {
+			this.rotateRightUnload();
 		}
 		this.stopRotation();
 		this.rotationPositionRight = true;
@@ -111,14 +135,14 @@ public class TerminalControl {
 
 		if (this.rotationPositionLeft) {
 			while (this.rotationMotor.getTachoCount() > 0) {
-				this.rotateRight();
+				this.rotateRightReset();
 			}
 			this.stopRotation();
 			this.rotationPositionLeft = false;
 
 		} else if (this.rotationPositionRight) {
 			while (this.rotationMotor.getTachoCount() < 0) {
-				this.rotateLeft();
+				this.rotateLeftReset();
 			}
 			this.stopRotation();
 			this.rotationPositionRight = false;

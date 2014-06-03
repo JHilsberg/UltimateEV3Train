@@ -25,7 +25,7 @@ public class MainTerminal {
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.unloadTerminalLeft();
@@ -33,7 +33,7 @@ public class MainTerminal {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.resetTerminal();
@@ -41,48 +41,42 @@ public class MainTerminal {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.lowerElevator();
 				LCD.refresh();
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} 
+			}
 			// Beladen Terminal Links
 			else if (Button.DOWN.isDown() && Button.LEFT.isDown()) {
 				terminal.loadTerminalLeft();
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.resetTerminal();
-			} 
+			}
 			// Beladen Terminal Rechts
 			else if (Button.DOWN.isDown() && Button.RIGHT.isDown()) {
 				terminal.loadTerminalRight();
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.resetTerminal();
-			} 
+			}
 			// Entladen Terminal Rechts
-			else if(Button.UP.isDown() && Button.RIGHT.isDown()){
+			else if (Button.UP.isDown() && Button.RIGHT.isDown()) {
 				terminal.liftElevator();
 				LCD.refresh();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.unloadTerminalRight();
@@ -90,7 +84,7 @@ public class MainTerminal {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.resetTerminal();
@@ -98,7 +92,7 @@ public class MainTerminal {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				terminal.lowerElevator();
@@ -106,10 +100,10 @@ public class MainTerminal {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
-				
+
 			}
 		}
 	}
