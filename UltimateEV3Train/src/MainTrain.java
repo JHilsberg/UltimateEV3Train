@@ -1,41 +1,62 @@
+import java.io.IOException;
+
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.robotics.Color;
 import train.*;
 
-public class MainTrain {
+class TrainMain {
 
-	private TrainController train = new TrainController();
-	private boolean greenDetected = false;
+	private TrainController train = new TrainController();;
+	private Client client = new Client(1111);
+	private boolean greenDetected = false, yellowDetected = false;
 
 	public static void main(String[] args) {
 		try {
-			new MainTrain();
+			new TrainMain();
 		} catch (InterruptedException e) {
-			// TODO Automatisch generierter Erfassungsblock
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	MainTrain() throws InterruptedException {
-		while (Button.ESCAPE.isDown() == false) {
+	private TrainMain() throws InterruptedException, IOException {
+		while (!Button.ESCAPE.isDown()) {
 			LCD.clearDisplay();
-			
+
 			train.forward();
 			train.detectColor();
 
-			if (train.getColor() == Color.GREEN && greenDetected == false) {
+			if (train.getColor() == Color.GREEN
+					&& greenDetected == false) {
 				LCD.drawString("Farbe: gruen", 0, 0);
 				train.stop();
-				train.unload();
-				train.load();
+				client.writeData(1);
+				if (client.readData() == 1) {
+					train.load();
+					train.unload();
+					//123
+					yellowDetected = false;
+					greenDetected = true;
+				}
 				greenDetected = true;
 			}
-			if (train.getColor() == Color.YELLOW) {
+			if (train.getColor() == Color.YELLOW
+					&& yellowDetected == false) {
 				LCD.drawString("Farbe: gelb", 0, 0);
+				LCD.drawString("warte auf Befehl... ....", 0, 1);
 				train.stop();
-				greenDetected = false;
-			} else{
+				client.writeData(2);
+				if (client.readData() == 2) {
+					greenDetected = false;
+					yellowDetected = true;
+					return;
+				}
+
+			} else {
 				LCD.drawString("Farberkennung...", 0, 0);
 				Thread.sleep(200);
 			}
