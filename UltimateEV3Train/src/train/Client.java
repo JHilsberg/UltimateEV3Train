@@ -32,5 +32,6 @@ public class Client {
 	
 	public void writeData(int data) throws IOException{
 		dos.writeInt(data);
+		dos.flush();
 	}
 }

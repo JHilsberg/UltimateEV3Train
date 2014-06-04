@@ -19,9 +19,8 @@ public class ServerTest {
 
 	ServerTest() throws Exception {
 		while (!Button.ESCAPE.isDown()) {
-			server = new Server("192.168.0.101", 1111);
+			server = new Server("192.168.0.104", 1111);
 			LCD.drawString("" + server.readData(), 0, 0);
-			Thread.sleep(200);
 			if (server.readData() == 1) {
 				server.writeData(1);
 			}

@@ -28,6 +28,7 @@ public class Server {
 	
 	public void writeData(int data) throws IOException{
 		dos.writeInt(data);
+		dos.flush();
 	}
 	
 	public int readData() throws IOException{
