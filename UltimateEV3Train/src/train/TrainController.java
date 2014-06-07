@@ -1,11 +1,9 @@
 package train;
 
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.*;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 
 public class TrainController {
