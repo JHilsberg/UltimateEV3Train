@@ -27,11 +27,11 @@ public class Client {
 	}
 
 	public int readData() throws IOException {
-		return dis.readInt();
+		return dis.read();
 	}
 	
 	public void writeData(int data) throws IOException{
-		dos.writeInt(data);
+		dos.write(data);
 		dos.flush();
 	}
 }

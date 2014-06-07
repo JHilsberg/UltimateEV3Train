@@ -27,11 +27,11 @@ public class Server {
 	}
 	
 	public void writeData(int data) throws IOException{
-		dos.writeInt(data);
+		dos.write(data);
 		dos.flush();
 	}
 	
 	public int readData() throws IOException{
-		return dis.readInt();
+		return dis.read();
 	}
 }
