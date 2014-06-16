@@ -25,37 +25,36 @@ class MainTrain {
 
 	public MainTrain() throws InterruptedException, IOException {
 		while (!Button.ESCAPE.isDown()) {
-			LCD.clearDisplay();
-
-			train.forward();
-			train.detectColor();
-
 			if (train.getColor() == Color.GREEN && greenDetected == false) {
-				LCD.drawString("Farbe: gruen", 0, 0);
 				train.stop();
 				client.writeData(1);
-				if (client.readData() == 1) {
-					train.load();
-					train.unload();
-					yellowDetected = false;
-					greenDetected = true;
-				}
-				greenDetected = true;
+				waitForTerminalAnswer();
 			}
 			if (train.getColor() == Color.YELLOW && yellowDetected == false) {
-				LCD.drawString("Farbe: gelb", 0, 0);
-				LCD.drawString("warte auf Befehl... ....", 0, 1);
 				train.stop();
 				client.writeData(2);
-				while (!Button.ENTER.isDown()) {
-					if (client.readData() == 2) {
-						greenDetected = false;
-						yellowDetected = true;
-					}
-				}
+				waitForTerminalAnswer();
 			} else {
-				LCD.drawString("Farberkennung...", 0, 0);
-				Thread.sleep(200);
+				train.forward();
+				train.detectColor();
+			}
+		}
+	}
+
+	public void waitForTerminalAnswer() throws IOException {
+		boolean inWaitingPosition = true;
+		while (inWaitingPosition) {
+			int receivedData = client.readData();
+			if (receivedData == 1) {
+				train.load();
+				train.unload();
+				yellowDetected = false;
+				greenDetected = true;
+				inWaitingPosition = false;
+			} else if (receivedData == 2) {
+				greenDetected = false;
+				yellowDetected = true;
+				inWaitingPosition = false;
 			}
 		}
 	}
