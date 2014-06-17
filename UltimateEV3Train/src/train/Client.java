@@ -3,35 +3,35 @@ package train;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Client {
 
-	private ServerSocket server;
 	private Socket s;
-	private DataInputStream dis;
 	private DataOutputStream dos;
-
-	public Client(int socketPort) {
+	private DataInputStream dis;
+	
+	public Client(String ipAdress, int socketPort){
 		try {
-			server = new ServerSocket(socketPort);
-			s = server.accept();
-			dis = new DataInputStream(s.getInputStream());
+			s = new Socket(ipAdress, socketPort);
 			dos = new DataOutputStream(s.getOutputStream());
-			
+			dis = new DataInputStream(s.getInputStream());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	public int readData() throws IOException {
-		return dis.read();
-	}
 	
 	public void writeData(int data) throws IOException{
 		dos.write(data);
 		dos.flush();
+	}
+	
+	public int readData() throws IOException{
+		return dis.read();
 	}
 }

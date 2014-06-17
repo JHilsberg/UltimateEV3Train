@@ -8,7 +8,7 @@ import train.*;
 class MainTrain {
 
 	private TrainController train = new TrainController();;
-	private Client client = new Client(1111);
+	private Client client = new Client("192.168.0.101", 1111);
 	private boolean greenDetected = false, yellowDetected = false;
 
 	public static void main(String[] args) {
@@ -45,13 +45,14 @@ class MainTrain {
 		boolean inWaitingPosition = true;
 		while (inWaitingPosition) {
 			int receivedData = client.readData();
-			if (receivedData == 1) {
+			LCD.drawString("Input: " + receivedData, 0, 0);
+			if (receivedData == 3) {
 				train.load();
 				train.unload();
 				yellowDetected = false;
 				greenDetected = true;
 				inWaitingPosition = false;
-			} else if (receivedData == 2) {
+			} else if (receivedData == 4) {
 				greenDetected = false;
 				yellowDetected = true;
 				inWaitingPosition = false;
