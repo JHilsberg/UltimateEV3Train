@@ -27,12 +27,12 @@ class MainTrain {
 		while (!Button.ESCAPE.isDown()) {
 			if (train.getColor() == Color.GREEN && greenDetected == false) {
 				train.stop();
-				client.writeData(1);
+				client.writeData("green");
 				waitForTerminalAnswer();
 			}
 			if (train.getColor() == Color.YELLOW && yellowDetected == false) {
 				train.stop();
-				client.writeData(2);
+				client.writeData("yellow");
 				waitForTerminalAnswer();
 			} else {
 				train.forward();
@@ -42,17 +42,18 @@ class MainTrain {
 	}
 
 	public void waitForTerminalAnswer() throws IOException {
+		LCD.drawString("Wait!", 0, 0);
 		boolean inWaitingPosition = true;
 		while (inWaitingPosition) {
-			int receivedData = client.readData();
+			String receivedData = client.readData();
 			LCD.drawString("Input: " + receivedData, 0, 0);
-			if (receivedData == 3) {
+			if (receivedData.equals("unload")) {
 				train.load();
 				train.unload();
 				yellowDetected = false;
 				greenDetected = true;
 				inWaitingPosition = false;
-			} else if (receivedData == 4) {
+			} else if (receivedData.equals("go")) {
 				greenDetected = false;
 				yellowDetected = true;
 				inWaitingPosition = false;

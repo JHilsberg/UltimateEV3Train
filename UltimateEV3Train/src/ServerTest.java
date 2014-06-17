@@ -22,11 +22,11 @@ public class ServerTest {
 
 			LCD.drawString("Input: " + server.readData(), 0, 0);
 
-			if (server.readData() == 1) {
-				server.writeData(3);
+			if (server.readData().equals("green")) {
+				server.writeData("unload");
 			}
-			if (server.readData() == 2) {
-				server.writeData(4);
+			if (server.readData().equals("yellow")) {
+				server.writeData("go");
 			}
 		}
 	}

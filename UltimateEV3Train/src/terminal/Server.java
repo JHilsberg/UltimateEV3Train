@@ -1,37 +1,38 @@
 package terminal;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
 
 	private ServerSocket server;
-	private Socket s = null;
-	private DataInputStream dis;
-	private DataOutputStream dos;
+	private Socket socket;
+	private PrintWriter serverOutput;
+	private BufferedReader serverInput;
 
 	public Server(int socketPort) {
 		try {
 			server = new ServerSocket(socketPort);
-			s = server.accept();
-			dis = new DataInputStream(s.getInputStream());
-			dos = new DataOutputStream(s.getOutputStream());
+			socket = server.accept();
+			serverOutput = new PrintWriter(socket.getOutputStream(), true);
+			serverInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public int readData() throws IOException {
-		return dis.readInt();
+	public String readData() throws IOException {
+		return serverInput.readLine();
 	}
 	
-	public void writeData(int data) throws IOException{
-		dos.writeInt(data);
-		dos.flush();
+	public void writeData(String data) throws IOException{
+		serverOutput.println(data);
 	}
 }

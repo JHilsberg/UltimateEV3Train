@@ -1,22 +1,25 @@
 package train;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
 
 	private Socket socket;
-	private DataOutputStream dos;
-	private DataInputStream dis;
+	private PrintWriter clientOutput;
+	private BufferedReader clientInput;
 	
 	public Client(String ipAdress, int socketPort){
 		try {
 			socket = new Socket(ipAdress, socketPort);
-			dos = new DataOutputStream(socket.getOutputStream());
-			dis = new DataInputStream(socket.getInputStream());
+			clientOutput = new PrintWriter(socket.getOutputStream(), true);
+			clientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,12 +29,11 @@ public class Client {
 		}
 	}
 	
-	public void writeData(int data) throws IOException{
-		dos.writeInt(data);
-		dos.flush();
+	public void writeData(String data) throws IOException{
+		clientOutput.println(data);
 	}
 	
-	public int readData() throws IOException{
-		return dis.readInt();
+	public String readData() throws IOException{
+		return clientInput.readLine();
 	}
 }
