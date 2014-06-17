@@ -34,5 +34,6 @@ public class Server {
 	
 	public void writeData(String data) throws IOException{
 		serverOutput.println(data);
+		serverOutput.flush();
 	}
 }

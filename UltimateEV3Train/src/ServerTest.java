@@ -19,13 +19,15 @@ public class ServerTest {
 
 	ServerTest() throws IOException {
 		while (!Button.ESCAPE.isDown()) {
+			
+			String receivedData = server.readData();
 
-			LCD.drawString("Input: " + server.readData(), 0, 0);
+			LCD.drawString("Input: " + receivedData, 0, 0);
 
-			if (server.readData().equals("green")) {
+			if (receivedData.equals("green")) {
 				server.writeData("unload");
 			}
-			if (server.readData().equals("yellow")) {
+			if (receivedData.equals("yellow")) {
 				server.writeData("go");
 			}
 		}

@@ -14,12 +14,13 @@ public class Client {
 	private Socket socket;
 	private PrintWriter clientOutput;
 	private BufferedReader clientInput;
-	
-	public Client(String ipAdress, int socketPort){
+
+	public Client(String ipAdress, int socketPort) {
 		try {
 			socket = new Socket(ipAdress, socketPort);
 			clientOutput = new PrintWriter(socket.getOutputStream(), true);
-			clientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			clientInput = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,12 +29,17 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
-	public void writeData(String data) throws IOException{
+
+	public void writeData(String data) throws IOException {
 		clientOutput.println(data);
+		clientOutput.flush();
 	}
-	
-	public String readData() throws IOException{
-		return clientInput.readLine();
+
+	public String readData() throws IOException {
+		String receivedData;
+		while ((receivedData = clientInput.readLine()) != null) {
+			return receivedData;
+		}
+		return "no data";
 	}
 }

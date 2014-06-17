@@ -43,7 +43,9 @@ class MainTrain {
 
 	public void waitForTerminalAnswer() throws IOException {
 		LCD.drawString("Wait! ", 0, 0);
-		boolean inWaitingPosition = true;
+		String receivedData = client.readData();
+		LCD.drawString("Input: " + receivedData, 0, 0);
+		/*boolean inWaitingPosition = true;
 		while (inWaitingPosition) {
 			String receivedData = client.readData();
 			LCD.drawString("Input: " + receivedData, 0, 0);
@@ -58,6 +60,6 @@ class MainTrain {
 				yellowDetected = true;
 				inWaitingPosition = false;
 			}
-		}
+		}*/
 	}
 }
