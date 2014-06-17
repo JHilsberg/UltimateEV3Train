@@ -42,24 +42,16 @@ class MainTrain {
 	}
 
 	public void waitForTerminalAnswer() throws IOException {
-		LCD.drawString("Wait! ", 0, 0);
 		String receivedData = client.readData();
 		LCD.drawString("Input: " + receivedData, 0, 0);
-		/*boolean inWaitingPosition = true;
-		while (inWaitingPosition) {
-			String receivedData = client.readData();
-			LCD.drawString("Input: " + receivedData, 0, 0);
-			if (receivedData.equals("unload")) {
-				train.load();
-				train.unload();
-				yellowDetected = false;
-				greenDetected = true;
-				inWaitingPosition = false;
-			} else if (receivedData.equals("go")) {
-				greenDetected = false;
-				yellowDetected = true;
-				inWaitingPosition = false;
-			}
-		}*/
+		if (receivedData.equals("unload")) {
+			train.unload();
+			train.load();
+			yellowDetected = false;
+			greenDetected = true;
+		} else if (receivedData.equals("go")) {
+			greenDetected = false;
+			yellowDetected = true;
+		}
 	}
 }
