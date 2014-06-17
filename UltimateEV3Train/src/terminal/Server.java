@@ -9,7 +9,7 @@ import java.net.Socket;
 public class Server {
 
 	private ServerSocket server;
-	private Socket s;
+	private Socket s = null;
 	private DataInputStream dis;
 	private DataOutputStream dos;
 
@@ -27,11 +27,11 @@ public class Server {
 	}
 
 	public int readData() throws IOException {
-		return dis.read();
+		return dis.readInt();
 	}
 	
 	public void writeData(int data) throws IOException{
-		dos.write(data);
+		dos.writeInt(data);
 		dos.flush();
 	}
 }

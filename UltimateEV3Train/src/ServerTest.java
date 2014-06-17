@@ -9,27 +9,24 @@ public class ServerTest {
 	private Server server = new Server(1111);
 
 	public static void main(String[] args) {
-			try {
-				new ServerTest();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			new ServerTest();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	ServerTest() throws IOException, InterruptedException {
+	ServerTest() throws IOException {
 		while (!Button.ESCAPE.isDown()) {
+
+			LCD.drawString("Input: " + server.readData(), 0, 0);
+
 			if (server.readData() == 1) {
 				server.writeData(3);
 			}
 			if (server.readData() == 2) {
 				server.writeData(4);
-			} else {
-				LCD.drawString("Input: " + server.readData(), 0, 0);
-				Thread.sleep(200);
 			}
 		}
 	}
