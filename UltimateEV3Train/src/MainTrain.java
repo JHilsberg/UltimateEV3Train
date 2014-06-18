@@ -14,16 +14,13 @@ class MainTrain {
 	public static void main(String[] args) {
 		try {
 			new MainTrain();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public MainTrain() throws IOException, InterruptedException {
+	public MainTrain() throws IOException {
 		while (!Button.ESCAPE.isDown()) {
 			if (train.getColor() == Color.GREEN && greenDetected == false) {
 				train.stop();
@@ -41,13 +38,12 @@ class MainTrain {
 		}
 	}
 
-	public void waitForTerminalAnswer() throws IOException, InterruptedException {
-		
+	public void waitForTerminalAnswer() throws IOException {
 		String receivedData = client.readData();
-		
+
 		LCD.clearDisplay();
 		LCD.drawString("Input:" + receivedData, 0, 0);
-		
+
 		if (receivedData.equals("unload")) {
 			train.unload();
 			train.load();

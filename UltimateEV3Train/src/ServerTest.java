@@ -15,16 +15,13 @@ public class ServerTest {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
-	ServerTest() throws IOException, InterruptedException {
+	ServerTest() throws IOException {
 		String dataTrain1;
 		String dataTrain2;
-		
+
 		while (!Button.ESCAPE.isDown()) {
 
 			dataTrain1 = trainServer1.readData();
