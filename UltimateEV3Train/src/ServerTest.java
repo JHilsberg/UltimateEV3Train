@@ -30,7 +30,7 @@ public class ServerTest {
 			LCD.clearDisplay();
 			LCD.drawString("Train 1: " + dataTrain1, 0, 0);
 			LCD.drawString("Train 2: " + dataTrain2, 0, 1);
-			Thread.sleep(200);
+			Thread.sleep(100);
 
 			if (dataTrain1.equals("green") && dataTrain2.equals("green")) {
 				trainServer1.writeData("unload");

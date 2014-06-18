@@ -23,7 +23,7 @@ class MainTrain {
 		}
 	}
 
-	public MainTrain() throws InterruptedException, IOException {
+	public MainTrain() throws IOException, InterruptedException {
 		while (!Button.ESCAPE.isDown()) {
 			if (train.getColor() == Color.GREEN && greenDetected == false) {
 				train.stop();
@@ -41,9 +41,14 @@ class MainTrain {
 		}
 	}
 
-	public void waitForTerminalAnswer() throws IOException {
+	public void waitForTerminalAnswer() throws IOException, InterruptedException {
+		
 		String receivedData = client.readData();
+		
+		LCD.clearDisplay();
 		LCD.drawString("Input: " + receivedData, 0, 0);
+		Thread.sleep(100);
+		
 		if (receivedData.equals("unload")) {
 			train.unload();
 			train.load();
