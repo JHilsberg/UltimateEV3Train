@@ -22,15 +22,17 @@ public class ServerTest {
 	}
 
 	ServerTest() throws IOException, InterruptedException {
+		String dataTrain1;
+		String dataTrain2;
+		
 		while (!Button.ESCAPE.isDown()) {
-			
-			String dataTrain1 = trainServer1.readData();
-			String dataTrain2 = trainServer2.readData();
-			
+
+			dataTrain1 = trainServer1.readData();
+			dataTrain2 = trainServer2.readData();
+
 			LCD.clearDisplay();
-			LCD.drawString("Train 1: " + dataTrain1, 0, 0);
-			LCD.drawString("Train 2: " + dataTrain2, 0, 1);
-			Thread.sleep(100);
+			LCD.drawString("Train 1:" + dataTrain1, 0, 0);
+			LCD.drawString("Train 2:" + dataTrain2, 0, 1);
 
 			if (dataTrain1.equals("green") && dataTrain2.equals("green")) {
 				trainServer1.writeData("unload");

@@ -7,8 +7,8 @@ import train.*;
 
 class MainTrain {
 
-	private TrainController train = new TrainController();;
-	private Client client = new Client("192.168.0.102", 1111);
+	private TrainController train = new TrainController();
+	private Client client = new Client("192.168.0.103", 1112);
 	private boolean greenDetected = false, yellowDetected = false;
 
 	public static void main(String[] args) {
@@ -46,12 +46,12 @@ class MainTrain {
 		String receivedData = client.readData();
 		
 		LCD.clearDisplay();
-		LCD.drawString("Input: " + receivedData, 0, 0);
-		Thread.sleep(100);
+		LCD.drawString("Input:" + receivedData, 0, 0);
 		
 		if (receivedData.equals("unload")) {
 			train.unload();
 			train.load();
+			waitForTerminalAnswer();
 		}
 		if (receivedData.equals("GoFromYellow")) {
 			greenDetected = false;
