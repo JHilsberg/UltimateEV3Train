@@ -35,6 +35,7 @@ public class TrainController {
 			this.loadingMotor.forward();
 		}
 		this.loadingMotor.stop();
+		this.loadingMotor.flt();
 	}
 
 	public void load() {
@@ -44,6 +45,7 @@ public class TrainController {
 			this.loadingMotor.backward();
 		}
 		this.loadingMotor.stop();
+		this.loadingMotor.flt();
 	}
 
 	public int getColor() {
