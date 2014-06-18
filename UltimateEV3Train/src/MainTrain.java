@@ -47,11 +47,14 @@ class MainTrain {
 		if (receivedData.equals("unload")) {
 			train.unload();
 			train.load();
-			yellowDetected = false;
-			greenDetected = true;
-		} else if (receivedData.equals("go")) {
+		}
+		if (receivedData.equals("GoFromYellow")) {
 			greenDetected = false;
 			yellowDetected = true;
+		}
+		if (receivedData.equals("GoFromGreen")) {
+			yellowDetected = false;
+			greenDetected = true;
 		}
 	}
 }
