@@ -6,9 +6,9 @@ import lejos.robotics.RegulatedMotor;
 
 public class TerminalControl {
 	// Aufruf Motoren
-	private RegulatedMotor elevatorLeft = new EV3LargeRegulatedMotor(
+	private RegulatedMotor elevator1 = new EV3LargeRegulatedMotor(
 			MotorPort.A);
-	private RegulatedMotor elevatorRight = new EV3LargeRegulatedMotor(
+	private RegulatedMotor elevator2 = new EV3LargeRegulatedMotor(
 			MotorPort.B);
 	private RegulatedMotor rotationMotor = new EV3MediumRegulatedMotor(
 			MotorPort.C);
@@ -19,72 +19,72 @@ public class TerminalControl {
 	private int movingSpeedRotationLoad = 100;
 	// Positionsvorgabe für einzelne Bewegungen
 	private int positionElevator = 180;
-	private int loadAngleLeft = 60;
-	private int loadAngleRight = -60;
-	private int unloadAngleLeft = 87;
-	private int unloadAngleRight = -77;
+	private int loadAngle1 = 60;
+	private int loadAngle2 = -60;
+	private int unloadAngle1 = 87;
+	private int unloadAngle2 = -77;
 	// Positionsmeldung
-	private boolean rotationPositionLeft = false;
-	private boolean rotationPositionRight = false;
+	private boolean rotationPosition1 = false;
+	private boolean rotationPosition2 = false;
 
 	public void liftElevator() {
 
-		while (elevatorLeft.getTachoCount() < this.positionElevator + 10
-				&& elevatorRight.getTachoCount() < this.positionElevator) {
-			this.elevatorLeft.setSpeed(this.movingSpeedElevator);
-			this.elevatorRight.setSpeed(this.movingSpeedElevator);
-			this.elevatorLeft.forward();
-			this.elevatorRight.forward();
+		while (elevator1.getTachoCount() < this.positionElevator + 10
+				&& elevator2.getTachoCount() < this.positionElevator) {
+			this.elevator1.setSpeed(this.movingSpeedElevator);
+			this.elevator2.setSpeed(this.movingSpeedElevator);
+			this.elevator1.forward();
+			this.elevator2.forward();
 		}
 		this.stopElevator();
 	}
 
 	public void lowerElevator() {
 
-		while (elevatorLeft.getTachoCount() > 0
-				&& elevatorRight.getTachoCount() > 0) {
-			this.elevatorLeft.setSpeed(this.movingSpeedElevator);
-			this.elevatorRight.setSpeed(this.movingSpeedElevator);
-			this.elevatorLeft.backward();
-			this.elevatorRight.backward();
+		while (elevator1.getTachoCount() > 0
+				&& elevator2.getTachoCount() > 0) {
+			this.elevator1.setSpeed(this.movingSpeedElevator);
+			this.elevator2.setSpeed(this.movingSpeedElevator);
+			this.elevator1.backward();
+			this.elevator2.backward();
 		}
 		this.stopElevator();
 	}
 
 	public void stopElevator() {
-		this.elevatorLeft.stop();
-		this.elevatorRight.stop();
-		this.elevatorLeft.flt();
-		this.elevatorRight.flt();
+		this.elevator1.stop();
+		this.elevator2.stop();
+		this.elevator1.flt();
+		this.elevator2.flt();
 	}
 
-	private void rotateLeftReset() {
+	private void rotate1Reset() {
 		this.rotationMotor.setSpeed(movingSpeedReset);
 		this.rotationMotor.forward();
 		;
 	}
 
-	private void rotateRightReset() {
+	private void rotate2Reset() {
 		this.rotationMotor.setSpeed(movingSpeedReset);
 		this.rotationMotor.backward();
 	}
 
-	private void rotateLeftUnload() {
+	private void rotate1Unload() {
 		this.rotationMotor.setSpeed(this.movingSpeedRotationUnload);
 		this.rotationMotor.forward();
 	}
 
-	private void rotateLeftLoad() {
+	private void rotate1Load() {
 		this.rotationMotor.setSpeed(this.movingSpeedRotationLoad);
 		this.rotationMotor.forward();
 	}
 
-	private void rotateRightUnload() {
+	private void rotate2Unload() {
 		this.rotationMotor.setSpeed(this.movingSpeedRotationUnload);
 		this.rotationMotor.backward();
 	}
 
-	private void rotateRightLoad() {
+	private void rotate2Load() {
 		this.rotationMotor.setSpeed(this.movingSpeedRotationLoad);
 		this.rotationMotor.backward();
 	}
@@ -93,59 +93,59 @@ public class TerminalControl {
 		this.rotationMotor.stop();
 	}
 
-	public void loadTerminalLeft() {
+	public void loadTerminal1() {
 
-		while (this.rotationMotor.getTachoCount() < this.loadAngleLeft) {
-			this.rotateLeftLoad();
+		while (this.rotationMotor.getTachoCount() < this.loadAngle1) {
+			this.rotate1Load();
 		}
 		this.stopRotation();
-		this.rotationPositionLeft = true;
+		this.rotationPosition1 = true;
 	}
 
-	public void loadTerminalRight() {
+	public void loadTerminal2() {
 
-		while (this.rotationMotor.getTachoCount() > this.loadAngleRight) {
-			this.rotateRightLoad();
+		while (this.rotationMotor.getTachoCount() > this.loadAngle2) {
+			this.rotate2Load();
 		}
 		this.stopRotation();
-		this.rotationPositionRight = true;
+		this.rotationPosition2 = true;
 
 	}
 
-	public void unloadTerminalLeft() {
+	public void unloadTerminal1() {
 
-		while (this.rotationMotor.getTachoCount() < this.unloadAngleLeft) {
-			this.rotateLeftUnload();
+		while (this.rotationMotor.getTachoCount() < this.unloadAngle1) {
+			this.rotate1Unload();
 		}
 		this.stopRotation();
-		this.rotationPositionLeft = true;
+		this.rotationPosition1 = true;
 	}
 
-	public void unloadTerminalRight() {
+	public void unloadTerminal2() {
 
-		while (this.rotationMotor.getTachoCount() > this.unloadAngleRight) {
-			this.rotateRightUnload();
+		while (this.rotationMotor.getTachoCount() > this.unloadAngle2) {
+			this.rotate2Unload();
 		}
 		this.stopRotation();
-		this.rotationPositionRight = true;
+		this.rotationPosition2 = true;
 
 	}
 
 	public void resetTerminal() {
 
-		if (this.rotationPositionLeft) {
+		if (this.rotationPosition1) {
 			while (this.rotationMotor.getTachoCount() > 0) {
-				this.rotateRightReset();
+				this.rotate2Reset();
 			}
 			this.stopRotation();
-			this.rotationPositionLeft = false;
+			this.rotationPosition1 = false;
 
-		} else if (this.rotationPositionRight) {
+		} else if (this.rotationPosition2) {
 			while (this.rotationMotor.getTachoCount() < 0) {
-				this.rotateLeftReset();
+				this.rotate1Reset();
 			}
 			this.stopRotation();
-			this.rotationPositionRight = false;
+			this.rotationPosition2 = false;
 		}
 	}
 
@@ -157,20 +157,20 @@ public class TerminalControl {
 		this.rotationMotor = rotationMotor;
 	}
 
-	public RegulatedMotor getElevatorRight() {
-		return elevatorRight;
+	public RegulatedMotor getElevator2() {
+		return elevator2;
 	}
 
-	public void setElevatorRight(RegulatedMotor elevatorRight) {
-		this.elevatorRight = elevatorRight;
+	public void setElevator2(RegulatedMotor elevator2) {
+		this.elevator2 = elevator2;
 	}
 
-	public RegulatedMotor getElevatorLeft() {
-		return elevatorLeft;
+	public RegulatedMotor getElevator1() {
+		return elevator1;
 	}
 
-	public void setElevatorLeft(RegulatedMotor elevatorLeft) {
-		this.elevatorLeft = elevatorLeft;
+	public void setElevator1(RegulatedMotor elevator1) {
+		this.elevator1 = elevator1;
 	}
 
 }

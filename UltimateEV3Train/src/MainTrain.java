@@ -8,7 +8,7 @@ import train.*;
 class MainTrain {
 
 	private TrainController train = new TrainController();
-	private Client client = new Client("192.168.0.103", 1112);
+	private Client client = new Client("192.168.0.104", 1112);
 	private boolean greenDetected = false, yellowDetected = false;
 
 	public static void main(String[] args) {
