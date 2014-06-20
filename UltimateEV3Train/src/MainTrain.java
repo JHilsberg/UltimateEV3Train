@@ -48,7 +48,7 @@ class MainTrain extends TrainControl {
 		if (receivedData.equals("unload")) {
 			super.unload();
 			super.load();
-			waitForTerminalAnswer();
+			this.waitForTerminalAnswer();
 		}
 		if (receivedData.equals("GoFromYellow")) {
 			greenDetected = false;
