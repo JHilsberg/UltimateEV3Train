@@ -17,17 +17,17 @@ public class TrainControl {
 	private int movingSpeed = 300;
 	private int loadingSpeed = 40;
 
-	public void forward() {
+	protected void forward() {
 		this.movingMotor.setSpeed(this.movingSpeed);
 		this.movingMotor.backward();
 	}
 
-	public void stop() {
+	protected void stop() {
 		this.movingMotor.stop();
 		this.movingMotor.flt();
 	}
 
-	public void unload() {
+	protected void unload() {
 		int loadAngle = 55;
 		this.loadingMotor.setSpeed(this.loadingSpeed);
 
@@ -38,7 +38,7 @@ public class TrainControl {
 		this.loadingMotor.flt();
 	}
 
-	public void load() {
+	protected void load() {
 		this.loadingMotor.setSpeed(this.loadingSpeed);
 
 		while (this.loadingMotor.getTachoCount() > 0) {
@@ -48,11 +48,11 @@ public class TrainControl {
 		this.loadingMotor.flt();
 	}
 
-	public int getColor() {
+	protected int getColor() {
 		return this.detectedColor;
 	}
 
-	public void detectColor() {
+	protected void detectColor() {
 		this.detectedColor = colorSensor.getColorID();
 	}
 }

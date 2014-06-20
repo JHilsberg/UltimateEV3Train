@@ -157,7 +157,6 @@ public class TerminalControl {
 	protected void loadTrainRight() throws InterruptedException {
 		loadTerminalRight();
 		Thread.sleep(3000);
-		resetTerminal();
 	}
 
 	protected void unloadTrainLeft() throws InterruptedException {
