@@ -2,14 +2,13 @@ import java.io.IOException;
 
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
-import terminal.Server;
-import terminal.TerminalControl;
+import terminal.*;
 
 public class MainTerminal extends TerminalControl {
-	
-	private Server rightTrain = new Server(1111);
-	private Server leftTrain = new Server(1112);
+
+	private Server leftTrain, rightTrain;
 	private boolean leftTrainLoaded = true, rightTrainLoaded, trainsLocked;
+	private String dataLeftTrain, dataRightTrain;
 
 	public static void main(String[] args) {
 		try {
@@ -24,24 +23,24 @@ public class MainTerminal extends TerminalControl {
 	}
 
 	MainTerminal() throws InterruptedException, IOException {
-		String dataLeftTrain;
-		String dataRightTrain;
+		leftTrain = new Server(1111);
+		rightTrain = new Server(1112);
 
 		while (Button.ESCAPE.isDown() == false) {
 			dataLeftTrain = rightTrain.readData();
 			dataRightTrain = leftTrain.readData();
 
-			LCD.clearDisplay();
+			LCD.refresh();
 			LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
 			LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
 
 			if (dataLeftTrain.equals("yellow")
 					&& dataRightTrain.equals("yellow")) {
-				goFrom("yellow");
+				this.goFrom("yellow");
 				trainsLocked = false;
 			}
 			if (dataLeftTrain.equals("green") && dataRightTrain.equals("green")) {
-					loadTrains();
+				this.loadTrains();
 			}
 		}
 	}
@@ -59,22 +58,22 @@ public class MainTerminal extends TerminalControl {
 
 	private void loadTrains() throws IOException, InterruptedException {
 		if (trainsLocked == false && leftTrainLoaded == true) {
-			loadTerminalLeft();
+			super.loadTrainLeft();
 			rightTrain.writeData("unload");
 			leftTrainLoaded = false;
-			resetTerminal();
-			unloadTrainRight();
+			super.resetTerminal();
+			super.unloadTrainRight();
 			rightTrainLoaded = true;
 		}
 		if (trainsLocked == false && rightTrainLoaded == true) {
-			loadTerminalRight();
+			super.loadTrainRight();
 			leftTrain.writeData("unload");
 			rightTrainLoaded = false;
-			resetTerminal();
-			unloadTrainLeft();
+			super.resetTerminal();
+			super.unloadTrainLeft();
 			leftTrainLoaded = true;
 		}
 		trainsLocked = true;
-		goFrom("green");
+		this.goFrom("green");
 	}
 }

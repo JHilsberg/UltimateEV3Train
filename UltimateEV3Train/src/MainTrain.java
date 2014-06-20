@@ -5,11 +5,10 @@ import lejos.hardware.lcd.LCD;
 import lejos.robotics.Color;
 import train.*;
 
-class MainTrain {
-
-	private TrainController train = new TrainController();
-	private Client client = new Client("192.168.0.104", 1112);
-	private boolean greenDetected = false, yellowDetected = false;
+class MainTrain extends TrainControl {
+	private Client client;
+	private boolean greenDetected, yellowDetected;
+	private String receivedData;
 
 	public static void main(String[] args) {
 		try {
@@ -21,32 +20,34 @@ class MainTrain {
 	}
 
 	public MainTrain() throws IOException {
+		client = new Client("192.168.0.104", 1112);
+
 		while (!Button.ESCAPE.isDown()) {
-			if (train.getColor() == Color.GREEN && greenDetected == false) {
-				train.stop();
+			if (super.getColor() == Color.GREEN && greenDetected == false) {
+				super.stop();
 				client.writeData("green");
-				waitForTerminalAnswer();
+				this.waitForTerminalAnswer();
 			}
-			if (train.getColor() == Color.YELLOW && yellowDetected == false) {
-				train.stop();
+			if (super.getColor() == Color.YELLOW && yellowDetected == false) {
+				super.stop();
 				client.writeData("yellow");
-				waitForTerminalAnswer();
+				this.waitForTerminalAnswer();
 			} else {
-				train.forward();
-				train.detectColor();
+				super.forward();
+				super.detectColor();
 			}
 		}
 	}
 
 	public void waitForTerminalAnswer() throws IOException {
-		String receivedData = client.readData();
+		receivedData = client.readData();
 
-		LCD.clearDisplay();
+		LCD.refresh();
 		LCD.drawString("Input:" + receivedData, 0, 0);
 
 		if (receivedData.equals("unload")) {
-			train.unload();
-			train.load();
+			super.unload();
+			super.load();
 			waitForTerminalAnswer();
 		}
 		if (receivedData.equals("GoFromYellow")) {

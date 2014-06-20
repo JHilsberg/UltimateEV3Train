@@ -6,7 +6,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.RegulatedMotor;
 
-public class TrainController {
+public class TrainControl {
 
 	private RegulatedMotor movingMotor = new EV3LargeRegulatedMotor(MotorPort.A);
 	private RegulatedMotor loadingMotor = new EV3MediumRegulatedMotor(
