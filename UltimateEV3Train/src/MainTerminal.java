@@ -1,7 +1,7 @@
-import java.io.IOException;
+import java.io.*;
 
-import lejos.hardware.Button;
-import lejos.hardware.lcd.LCD;
+import lejos.hardware.*;
+import lejos.hardware.lcd.*;
 import terminal.*;
 
 public class MainTerminal extends TerminalControl {
@@ -37,12 +37,8 @@ public class MainTerminal extends TerminalControl {
 		rightTrain = new Server(1112);
 
 		while (Button.ESCAPE.isDown() == false) {
-			dataLeftTrain = rightTrain.readData();
-			dataRightTrain = leftTrain.readData();
-
-			LCD.clear();
-			LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
-			LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
+			dataLeftTrain = leftTrain.readData();
+			dataRightTrain = rightTrain.readData();
 
 			if (dataLeftTrain.equals("yellow")
 					&& dataRightTrain.equals("yellow")) {
@@ -51,6 +47,11 @@ public class MainTerminal extends TerminalControl {
 			}
 			if (dataLeftTrain.equals("green") && dataRightTrain.equals("green")) {
 				this.loadTrains();
+				trainsLocked = true;
+			} else {
+				LCD.clear();
+				LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
+				LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
 			}
 		}
 	}
@@ -74,7 +75,6 @@ public class MainTerminal extends TerminalControl {
 			super.resetTerminal();
 			super.unloadTrainLeft();
 			rightTrainLoaded = true;
-			trainsLocked = true;
 		}
 		if (trainsLocked == false && rightTrainLoaded == true) {
 			leftTrain.writeData("unload");
@@ -83,7 +83,6 @@ public class MainTerminal extends TerminalControl {
 			super.resetTerminal();
 			super.unloadTrainRight();
 			leftTrainLoaded = true;
-			trainsLocked = true;
 		}
 		this.goFrom("green");
 	}

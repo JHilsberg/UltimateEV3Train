@@ -1,16 +1,17 @@
-import java.io.IOException;
-
-import lejos.hardware.Button;
-import lejos.hardware.lcd.LCD;
-import lejos.robotics.Color;
+import java.io.*;
+import lejos.hardware.*;
+import lejos.hardware.lcd.*;
+import lejos.robotics.*;
 import train.*;
 
 class MainTrain extends TrainControl {
 	private Client client;
 	private boolean greenDetected, yellowDetected;
 	private String receivedData;
+	private File horn;
 
 	public static void main(String[] args) {
+		
 		try {
 			new MainTrain();
 		} catch (IOException e) {
@@ -19,7 +20,8 @@ class MainTrain extends TrainControl {
 	}
 
 	public MainTrain() throws IOException {
-		client = new Client("192.168.0.7", 1112);
+		horn = new File("horn.wav");
+		client = new Client("192.168.0.7", 1111);
 
 		while (!Button.ESCAPE.isDown()) {
 			if (super.getColor() == Color.GREEN && greenDetected == false) {
@@ -52,10 +54,12 @@ class MainTrain extends TrainControl {
 		if (receivedData.equals("GoFromYellow")) {
 			greenDetected = false;
 			yellowDetected = true;
+			Sound.playSample(horn);
 		}
 		if (receivedData.equals("GoFromGreen")) {
 			yellowDetected = false;
 			greenDetected = true;
+			Sound.playSample(horn);
 		}
 	}
 }
