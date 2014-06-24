@@ -34,7 +34,7 @@ public class TrainControl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int loadAngle = 55;
+		int loadAngle = 50;
 		this.loadingMotor.setSpeed(this.loadingSpeed);
 
 		while (this.loadingMotor.getTachoCount() < loadAngle) {
