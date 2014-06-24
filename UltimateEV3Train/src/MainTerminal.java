@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 
 import lejos.hardware.*;
 import lejos.hardware.lcd.*;
@@ -9,6 +10,7 @@ public class MainTerminal extends TerminalControl {
 	private Server leftTrain, rightTrain;
 	private boolean leftTrainLoaded = true, rightTrainLoaded, trainsLocked;
 	private String dataLeftTrain, dataRightTrain;
+	private Random r;
 
 	public static void main(String[] args) {
 		try {
@@ -35,6 +37,9 @@ public class MainTerminal extends TerminalControl {
 	MainTerminal() throws InterruptedException, IOException {
 		leftTrain = new Server(1111);
 		rightTrain = new Server(1112);
+		
+		/*r = new Random();
+		setLoadedTrain();*/
 
 		while (Button.ESCAPE.isDown() == false) {
 			dataLeftTrain = leftTrain.readData();
@@ -52,6 +57,7 @@ public class MainTerminal extends TerminalControl {
 				LCD.clear();
 				LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
 				LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
+				Thread.sleep(200);
 			}
 		}
 	}
@@ -85,5 +91,13 @@ public class MainTerminal extends TerminalControl {
 			leftTrainLoaded = true;
 		}
 		this.goFrom("green");
+	}
+	
+	private void setLoadedTrain(){
+		leftTrainLoaded = r.nextBoolean();
+		rightTrainLoaded = r.nextBoolean();
+		if(leftTrainLoaded = rightTrainLoaded){
+			setLoadedTrain();
+		}
 	}
 }

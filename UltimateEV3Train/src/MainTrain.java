@@ -1,4 +1,5 @@
 import java.io.*;
+
 import lejos.hardware.*;
 import lejos.hardware.lcd.*;
 import lejos.robotics.*;
@@ -16,10 +17,13 @@ class MainTrain extends TrainControl {
 			new MainTrain();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
-	public MainTrain() throws IOException {
+	public MainTrain() throws IOException, InterruptedException {
 		horn = new File("horn.wav");
 		client = new Client("192.168.0.7", 1111);
 
@@ -40,9 +44,9 @@ class MainTrain extends TrainControl {
 		}
 	}
 
-	public void waitForTerminalAnswer() throws IOException {
+	public void waitForTerminalAnswer() throws IOException, InterruptedException {
 		receivedData = client.readData();
-
+		
 		LCD.clear();
 		LCD.drawString("Input:" + receivedData, 0, 0);
 
