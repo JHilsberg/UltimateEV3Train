@@ -19,6 +19,16 @@ public class MainTerminal extends TerminalControl {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			LCD.drawString("Trains disconnected", 0, 0);
+			LCD.drawString("Shutting down...", 0, 1);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.exit(0);
 		}
 	}
 

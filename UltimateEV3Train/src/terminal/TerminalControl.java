@@ -15,7 +15,7 @@ public class TerminalControl {
 	// Geschwindigkeitsvorgaben für einzelne Bewegungen
 	private int movingSpeedElevator = 50;
 	private int movingSpeedReset = 50;
-	private int movingSpeedRotationUnload = 200;
+	private int movingSpeedRotationUnload = 300;
 	private int movingSpeedRotationLoad = 100;
 	// Positionsvorgabe für einzelne Bewegungen
 	private int positionElevator = 180;
