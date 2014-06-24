@@ -15,12 +15,11 @@ class MainTrain extends TrainControl {
 			new MainTrain();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
 	public MainTrain() throws IOException {
-		client = new Client("192.168.0.7", 1111);
+		client = new Client("192.168.0.7", 1112);
 
 		while (!Button.ESCAPE.isDown()) {
 			if (super.getColor() == Color.GREEN && greenDetected == false) {
@@ -42,7 +41,7 @@ class MainTrain extends TrainControl {
 	public void waitForTerminalAnswer() throws IOException {
 		receivedData = client.readData();
 
-		LCD.refresh();
+		LCD.clear();
 		LCD.drawString("Input:" + receivedData, 0, 0);
 
 		if (receivedData.equals("unload")) {

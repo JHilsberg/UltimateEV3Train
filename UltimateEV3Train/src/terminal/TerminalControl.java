@@ -15,21 +15,21 @@ public class TerminalControl {
 	// Geschwindigkeitsvorgaben für einzelne Bewegungen
 	private int movingSpeedElevator = 50;
 	private int movingSpeedReset = 50;
-	private int movingSpeedRotationUnload = 300;
+	private int movingSpeedRotationUnload = 250;
 	private int movingSpeedRotationLoad = 100;
 	// Positionsvorgabe für einzelne Bewegungen
 	private int positionElevator = 180;
-	private int loadAngleLeft = 60;
-	private int loadAngleRight = -60;
-	private int unloadAngleLeft = 87;
-	private int unloadAngleRight = -77;
+	private int loadAngleLeft = 70;
+	private int loadAngleRight = -70;
+	private int unloadAngleLeft = 77;
+	private int unloadAngleRight = -78;
 	// Positionsmeldung
 	private boolean rotationPositionLeft = false;
 	private boolean rotationPositionRight = false;
 
 	private void liftElevator() {
 
-		while (elevatorLeft.getTachoCount() < this.positionElevator + 10
+		while (elevatorLeft.getTachoCount() < this.positionElevator
 				&& elevatorRight.getTachoCount() < this.positionElevator) {
 			this.elevatorLeft.setSpeed(this.movingSpeedElevator);
 			this.elevatorRight.setSpeed(this.movingSpeedElevator);
@@ -54,8 +54,6 @@ public class TerminalControl {
 	private void stopElevator() {
 		this.elevatorLeft.stop();
 		this.elevatorRight.stop();
-		this.elevatorLeft.flt();
-		this.elevatorRight.flt();
 	}
 
 	private void rotateLeftReset() {

@@ -20,8 +20,8 @@ public class MainTerminal extends TerminalControl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NullPointerException e) {
-			LCD.drawString("Trains disconnected", 0, 0);
-			LCD.drawString("Shutting down...", 0, 1);
+			LCD.drawString("connection lost", 0, 0);
+			LCD.drawString("shutting down...", 0, 1);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
@@ -40,7 +40,7 @@ public class MainTerminal extends TerminalControl {
 			dataLeftTrain = rightTrain.readData();
 			dataRightTrain = leftTrain.readData();
 
-			LCD.refresh();
+			LCD.clear();
 			LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
 			LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
 

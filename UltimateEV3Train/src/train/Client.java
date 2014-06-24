@@ -1,11 +1,9 @@
 package train;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.net.*;
+
+import lejos.hardware.lcd.LCD;
 
 public class Client {
 
@@ -13,9 +11,10 @@ public class Client {
 	private PrintWriter clientOutput;
 	private BufferedReader clientInput;
 
-	public Client(String ipAdress, int socketPort) {
+	public Client(String ipAddress, int socketPort) {
+
 		try {
-			socket = new Socket(ipAdress, socketPort);
+			socket = new Socket(ipAddress, socketPort);
 			clientOutput = new PrintWriter(socket.getOutputStream(), true);
 			clientInput = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
@@ -23,8 +22,15 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LCD.drawString("ERROR please start", 0, 0);
+			LCD.drawString("other train first", 0, 1);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.exit(0);
 		}
 	}
 
