@@ -186,21 +186,4 @@ public class TerminalControl {
 		lowerElevator();
 		Thread.sleep(1000);
 	}
-	
-	/*
-	 * private RegulatedMotor getRotationMotor() { return rotationMotor; }
-	 * 
-	 * private void setRotationMotor(RegulatedMotor rotationMotor) {
-	 * this.rotationMotor = rotationMotor; }
-	 * 
-	 * private RegulatedMotor getElevatorRight() { return elevatorRight; }
-	 * 
-	 * private void setElevatorRight(RegulatedMotor elevatorRight) {
-	 * this.elevatorRight = elevatorRight; }
-	 * 
-	 * private RegulatedMotor getElevatorLeft() { return elevatorLeft; }
-	 * 
-	 * private void setElevatorLeft(RegulatedMotor elevatorLeft) {
-	 * this.elevatorLeft = elevatorLeft; }
-	 */
 }
