@@ -20,7 +20,7 @@ class MainTrain extends TrainControl {
 	}
 
 	public MainTrain() throws IOException {
-		client = new Client("192.168.0.104", 1112);
+		client = new Client("192.168.0.7", 1111);
 
 		while (!Button.ESCAPE.isDown()) {
 			if (super.getColor() == Color.GREEN && greenDetected == false) {

@@ -58,22 +58,23 @@ public class MainTerminal extends TerminalControl {
 
 	private void loadTrains() throws IOException, InterruptedException {
 		if (trainsLocked == false && leftTrainLoaded == true) {
-			super.loadTrainLeft();
 			rightTrain.writeData("unload");
+			super.loadTrainRight();
 			leftTrainLoaded = false;
 			super.resetTerminal();
-			super.unloadTrainRight();
+			super.unloadTrainLeft();
 			rightTrainLoaded = true;
+			trainsLocked = true;
 		}
 		if (trainsLocked == false && rightTrainLoaded == true) {
-			super.loadTrainRight();
 			leftTrain.writeData("unload");
+			super.loadTrainLeft();
 			rightTrainLoaded = false;
 			super.resetTerminal();
-			super.unloadTrainLeft();
+			super.unloadTrainRight();
 			leftTrainLoaded = true;
+			trainsLocked = true;
 		}
-		trainsLocked = true;
 		this.goFrom("green");
 	}
 }

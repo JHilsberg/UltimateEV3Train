@@ -28,6 +28,12 @@ public class TrainControl {
 	}
 
 	protected void unload() {
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int loadAngle = 55;
 		this.loadingMotor.setSpeed(this.loadingSpeed);
 
