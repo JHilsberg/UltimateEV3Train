@@ -22,8 +22,9 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			LCD.drawString("ERROR please start", 0, 0);
-			LCD.drawString("other train first", 0, 1);
+			LCD.drawString("ERROR! Server", 0, 0);
+			LCD.drawString("started? else start", 0, 1);
+			LCD.drawString("other train first", 0, 2);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {

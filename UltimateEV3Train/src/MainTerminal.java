@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 import lejos.hardware.*;
 import lejos.hardware.lcd.*;
@@ -8,9 +7,9 @@ import terminal.*;
 public class MainTerminal extends TerminalControl {
 
 	private Server leftTrain, rightTrain;
-	private boolean leftTrainLoaded = true, rightTrainLoaded, trainsLocked;
+	private boolean leftTrainLoaded = true, rightTrainLoaded, trainsLocked,
+			firstRun = true;
 	private String dataLeftTrain, dataRightTrain;
-	private Random r;
 
 	public static void main(String[] args) {
 		try {
@@ -38,13 +37,13 @@ public class MainTerminal extends TerminalControl {
 		leftTrain = new Server(1111);
 		rightTrain = new Server(1112);
 
-		/*
-		 * r = new Random(); setLoadedTrain();
-		 */
-
 		while (Button.ESCAPE.isDown() == false) {
 			dataLeftTrain = leftTrain.readData();
 			dataRightTrain = rightTrain.readData();
+
+			LCD.clear();
+			LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
+			LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
 
 			if (dataLeftTrain.equals("yellow")
 					&& dataRightTrain.equals("yellow")) {
@@ -53,11 +52,7 @@ public class MainTerminal extends TerminalControl {
 			}
 			if (dataLeftTrain.equals("green") && dataRightTrain.equals("green")) {
 				this.loadTrains();
-			} else {
-				LCD.clear();
-				LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
-				LCD.drawString("Train 2:" + dataRightTrain, 0, 1);
-				Thread.sleep(200);
+				this.goFrom("green");
 			}
 		}
 	}
@@ -74,32 +69,28 @@ public class MainTerminal extends TerminalControl {
 	}
 
 	private void loadTrains() throws IOException, InterruptedException {
-		if (trainsLocked == false && leftTrainLoaded == true) {
-			rightTrain.writeData("unload");
-			super.loadTrainRight();
-			leftTrainLoaded = false;
-			super.resetTerminal();
-			super.unloadTrainLeft();
-			rightTrainLoaded = true;
-			trainsLocked = true;
-		}
-		if (trainsLocked == false && rightTrainLoaded == true) {
-			leftTrain.writeData("unload");
-			super.loadTrainLeft();
-			rightTrainLoaded = false;
-			super.resetTerminal();
+		if (firstRun == true) {
 			super.unloadTrainRight();
-			leftTrainLoaded = true;
-			trainsLocked = true;
-		}
-		this.goFrom("green");
-	}
-
-	private void setLoadedTrain() {
-		leftTrainLoaded = r.nextBoolean();
-		rightTrainLoaded = r.nextBoolean();
-		if (leftTrainLoaded = rightTrainLoaded) {
-			setLoadedTrain();
+			firstRun = false;
+		} else {
+			if (trainsLocked == false && leftTrainLoaded == true) {
+				rightTrain.writeData("unload");
+				super.loadTrainRight();
+				leftTrainLoaded = false;
+				super.resetTerminal();
+				super.unloadTrainLeft();
+				rightTrainLoaded = true;
+				trainsLocked = true;
+			}
+			if (trainsLocked == false && rightTrainLoaded == true) {
+				leftTrain.writeData("unload");
+				super.loadTrainLeft();
+				rightTrainLoaded = false;
+				super.resetTerminal();
+				super.unloadTrainRight();
+				leftTrainLoaded = true;
+				trainsLocked = true;
+			}
 		}
 	}
 }

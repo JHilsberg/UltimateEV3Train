@@ -9,7 +9,7 @@ class MainTrain extends TrainControl {
 	private Client client;
 	private boolean greenDetected, yellowDetected;
 	private String receivedData;
-	private File horn, cableCar;
+	private File horn;
 
 	public static void main(String[] args) {
 		
@@ -17,15 +17,11 @@ class MainTrain extends TrainControl {
 			new MainTrain();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
-	public MainTrain() throws IOException, InterruptedException {
+	public MainTrain() throws IOException {
 		horn = new File("horn.wav");
-		cableCar = new File("cableCar.wav");
 		client = new Client("192.168.0.7", 1111);
 
 		while (!Button.ESCAPE.isDown()) {
@@ -45,7 +41,7 @@ class MainTrain extends TrainControl {
 		}
 	}
 
-	public void waitForTerminalAnswer() throws IOException, InterruptedException {
+	public void waitForTerminalAnswer() throws IOException {
 		receivedData = client.readData();
 		
 		LCD.clear();
@@ -63,7 +59,7 @@ class MainTrain extends TrainControl {
 			
 		}
 		if (receivedData.equals("GoFromGreen")) {
-			Sound.playSample(cableCar);
+			Sound.playSample(horn);
 			yellowDetected = false;
 			greenDetected = true;
 		}
