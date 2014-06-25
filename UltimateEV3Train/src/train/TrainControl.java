@@ -14,8 +14,8 @@ public class TrainControl {
 	private EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
 
 	private int detectedColor;
-	private int movingSpeed = 300;
-	private int loadingSpeed = 40;
+	private int movingSpeed = 350;
+	private int loadingSpeed = 50;
 
 	protected void forward() {
 		this.movingMotor.setSpeed(this.movingSpeed);

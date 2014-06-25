@@ -19,10 +19,10 @@ public class TerminalControl {
 	private int movingSpeedRotationLoad = 100;
 	// Positionsvorgabe für einzelne Bewegungen
 	private int positionElevator = 180;
-	private int loadAngleLeft = 65;
+	private int loadAngleLeft = 70;
 	private int loadAngleRight = -70;
 	private int unloadAngleLeft = 77;
-	private int unloadAngleRight = -80;
+	private int unloadAngleRight = -78;
 	// Positionsmeldung
 	private boolean rotationPositionLeft = false;
 	private boolean rotationPositionRight = false;

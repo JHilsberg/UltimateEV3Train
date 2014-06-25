@@ -37,9 +37,10 @@ public class MainTerminal extends TerminalControl {
 	MainTerminal() throws InterruptedException, IOException {
 		leftTrain = new Server(1111);
 		rightTrain = new Server(1112);
-		
-		/*r = new Random();
-		setLoadedTrain();*/
+
+		/*
+		 * r = new Random(); setLoadedTrain();
+		 */
 
 		while (Button.ESCAPE.isDown() == false) {
 			dataLeftTrain = leftTrain.readData();
@@ -52,7 +53,6 @@ public class MainTerminal extends TerminalControl {
 			}
 			if (dataLeftTrain.equals("green") && dataRightTrain.equals("green")) {
 				this.loadTrains();
-				trainsLocked = true;
 			} else {
 				LCD.clear();
 				LCD.drawString("Train 1:" + dataLeftTrain, 0, 0);
@@ -81,6 +81,7 @@ public class MainTerminal extends TerminalControl {
 			super.resetTerminal();
 			super.unloadTrainLeft();
 			rightTrainLoaded = true;
+			trainsLocked = true;
 		}
 		if (trainsLocked == false && rightTrainLoaded == true) {
 			leftTrain.writeData("unload");
@@ -89,14 +90,15 @@ public class MainTerminal extends TerminalControl {
 			super.resetTerminal();
 			super.unloadTrainRight();
 			leftTrainLoaded = true;
+			trainsLocked = true;
 		}
 		this.goFrom("green");
 	}
-	
-	private void setLoadedTrain(){
+
+	private void setLoadedTrain() {
 		leftTrainLoaded = r.nextBoolean();
 		rightTrainLoaded = r.nextBoolean();
-		if(leftTrainLoaded = rightTrainLoaded){
+		if (leftTrainLoaded = rightTrainLoaded) {
 			setLoadedTrain();
 		}
 	}
